@@ -31,7 +31,12 @@ const cookie = function () {
             domain = `;domain=${opt.domain || ''}`,
             secure = opt.secure ? ';secure' : '';
 
-          if(expires)
+          if(expiresType === 'string') expires = new Date(expiresType);
+          else if(expiresType === 'number') expires = new Date(
+              +new Date + 1000 * 60 * 60 * 24 * expires);
+          
+          if(expires !== '' && toGTMString in expires) expires=`;expires=${expires.toGTMString()}`;
+          document.cookie = encodeURIComponent(name) + '=' + encodeURIComponent(value) + expires + path + domain + secure;
         }
       }
     },
