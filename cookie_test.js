@@ -37,5 +37,11 @@ describe('Cookie object isPlainObject test', () => {
   })
 })
 
+describe('CookieAPI set function test', () => {
+  it('when options is number', () => {
+    expect(cookieAPI.set('aaa', 1, 1)).to.be.equal(`aaa=1;expires=${new Date(+new Date + 1000 * 60 * 60 * 24 * 1).toGMTString()};path=/;domain=`)
+  })
+})
+
 
 
