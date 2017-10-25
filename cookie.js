@@ -11,7 +11,7 @@ const cookie = function () {
         for (let item of c_arr) {
           item = item.replace(/^\s*/g, '');
           if (item.indexOf(nameEQ) === 0) {
-            return item.substring(nameEQ.length, item.length);
+            return decodeURIComponent(item.substring(nameEQ.length, item.length));
           }
         }
         return false;
@@ -31,7 +31,14 @@ const cookie = function () {
             domain = `;domain=${opt.domain || ''}`,
             secure = opt.secure ? ';secure' : '';
 
-          if(expires)
+          if(expiresType === 'string') expires = new Date(expires);
+          else if(expiresType === 'number') expires = new Date(
+            +new Date + 1000 * 60 * 60 * 24 * expires);
+
+          if(expires !== '' && toGTMString in expires) expires = ';expires=' + expires.toGTMString();
+
+          document.cookie = encodeURIComponent(name) + '=' + encodeURIComponent(value) + expires + path + domain + secure;
+          return document.cookie;
         }
       }
     },

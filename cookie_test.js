@@ -37,5 +37,15 @@ describe('Cookie object isPlainObject test', () => {
   })
 })
 
+describe('CookieAPI set function test', () => {
+  it('when name is object', () => {
+    const name = {
+      username: 'zimo',
+      age: 21,
+    };
+    expect(cookieAPI.set(name, 1)).to.be.equal('username=zimo;age=21')
+  })
+})
+
 
 
